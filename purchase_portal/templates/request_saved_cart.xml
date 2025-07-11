@@ -30,7 +30,7 @@
                 <t t-else="">Saved Carts</t>
             </li>
             <li t-if="saved_cart" class="breadcrumb-item active">
-                <t t-esc="saved_cart.name" />
+                <t t-out="saved_cart.name" />
             </li>
         </xpath>
     </template>
@@ -74,7 +74,7 @@
                                     t-att-href="cart.get_portal_url()"
                                     t-att-title="cart.name"
                                 >
-                                <t t-esc="cart.name" />
+                                <t t-out="cart.name" />
                             </a>
                         </td>
                         <td class="d-none d-md-table-cell"><span

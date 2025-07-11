@@ -22,7 +22,7 @@
     "name": "Purchase portal",
     "summary": "Allow to make a purchase request from the portal",
     "version": "16.0.1.0.0",
-    "author": "Comunitea Servicios Tecnológicos S.L.",
+    "author": "Comunitea Servicios Tecnológicos S.L., Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/pms",
     "license": "AGPL-3",
     "category": "Custom",
