@@ -44,8 +44,9 @@ class DocuwareBackend(models.Model):
 
     def generate_token(self):
         self.ensure_one()
-        self.access_token = DocuwareApi(self.url,self.username, self.password).genereate_access_token_identity_service(
-        )
+        self.access_token = DocuwareApi(
+            self.url, self.username, self.password
+        ).genereate_access_token_identity_service()
         if self.access_token:
             self.token_ok = True
 

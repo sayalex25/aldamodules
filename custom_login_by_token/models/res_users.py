@@ -34,7 +34,9 @@ class ResUsers(models.Model):
             if not users:
                 raise
 
-            if not self.signup_token \
-                or not self.signup_valid \
-                    or self.signup_token != password:
+            if (
+                not self.signup_token
+                or not self.signup_valid
+                or self.signup_token != password
+            ):
                 raise

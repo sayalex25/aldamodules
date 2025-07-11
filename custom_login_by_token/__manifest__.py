@@ -23,7 +23,7 @@
     "summary": "Allows login using signup token",
     "version": "16.0.1.0.0",
     "author": "Comunitea Servicios Tecnológicos S.L.",
-    "website": "www.comunitea.com",
+    "website": "https://github.com/OCA/pms",
     "license": "AGPL-3",
     "category": "Custom",
     "depends": [

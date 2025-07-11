@@ -2,10 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import json
 import logging
-import time
+from urllib.parse import urlencode
 
 import requests
-from urllib.parse import urlencode
 from requests.exceptions import ConnectionError as ConnError, HTTPError, Timeout
 
 from odoo.addons.component.core import AbstractComponent
@@ -56,17 +55,13 @@ class DocuwareApi(object):
         self.genereate_access_token_identity_service()
         return self
 
-
     # New Rest API
     def get_identity_url(self):
         identity_info_url = "{}/home/identityserviceinfo".format(self.location)
         response = self.session.request(
             "GET",
             url=identity_info_url,
-            headers={
-                "User-Agent": "OdooConnector/1.0",
-                "Accept": "application/json"
-            }
+            headers={"User-Agent": "OdooConnector/1.0", "Accept": "application/json"},
         )
         if response.status_code != 200:
             raise FailedJobError(
@@ -107,7 +102,7 @@ class DocuwareApi(object):
             "username": self.username,
             "password": self.password,
             "scope": "docuware.platform",
-            "client_id": "docuware.platform.net.client"
+            "client_id": "docuware.platform.net.client",
         }
         payload = urlencode(data)
         token_response = self.session.request(
@@ -117,15 +112,16 @@ class DocuwareApi(object):
             headers={
                 "User-Agent": "OdooConnector/1.0",
                 "Accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
         )
         if token_response.status_code != 200:
             raise FailedJobError(
                 "%s error: %s" % (token_response.status_code, token_response.content)
             )
-        self.headers["Authorization"] = "Bearer " + \
-            json.loads(token_response.content)["access_token"]
+        self.headers["Authorization"] = (
+            "Bearer " + json.loads(token_response.content)["access_token"]
+        )
         self.token = json.loads(token_response.content)["access_token"]
 
         return self.token
@@ -141,7 +137,7 @@ class DocuwareApi(object):
     ):
 
         headers = self.headers
-        if 'Authorization' not in headers:
+        if "Authorization" not in headers:
             self.genereate_access_token_identity_service()
         headers["Content-Type"] = content_type
         return self.session.request(
@@ -191,7 +187,10 @@ class DocuwareCRUDAdapter(AbstractComponent):
         """
         super().__init__(environment)
         self.client = DocuwareApi(
-            self.backend_record.url, self.backend_record.username, self.backend_record.password, self.backend_record.access_token
+            self.backend_record.url,
+            self.backend_record.username,
+            self.backend_record.password,
+            self.backend_record.access_token,
         )
         self.client.login()
 
