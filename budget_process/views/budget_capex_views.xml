@@ -73,9 +73,9 @@
     <field name="model">budget.capex</field>
     <field name="arch" type="xml">
       <pivot string="capex Pivot">
-        <field name="responsible" type="row" />
-        <field name="hotel" type="row" />
         <field name="year" type="row" />
+        <field name="hotel" type="row" />
+        <field name="responsible" type="row" />
         <field name="total" type="measure" sum="True" />
       </pivot>
     </field>
@@ -92,8 +92,8 @@
         <field name="year" />
         <field name="company" />
         <separator />
-        <filter name="group_by_hotel" string="Hotel" context="{'group_by': 'hotel'}" />
         <filter name="group_by_year" string="Year" context="{'group_by': 'year'}" />
+        <filter name="group_by_hotel" string="Hotel" context="{'group_by': 'hotel'}" />
         <filter
                     name="group_by_responsible"
                     string="Responsible"
@@ -124,7 +124,9 @@
     <field name="name">capex</field>
     <field name="res_model">budget.capex</field>
     <field name="view_mode">tree,form,pivot</field>
-    <field name="context">{'group_by': ['hotel', 'year']}</field>
+    <field
+            name="context"
+        >{'search_default_group_by_year': 1, 'search_default_group_by_hotel': 1}</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_smiling_face">
         Create records for each hotel.

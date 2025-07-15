@@ -8,4 +8,3 @@ class BudgetRevenue(models.Model):
     department = fields.Selection(
         [("revenue", "Revenue")], default="revenue", readonly=True
     )
-    hotel = fields.Many2one("budget.hotel")

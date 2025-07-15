@@ -9,5 +9,4 @@ access_budget_revenue_user,Presupuesto Revenue,model_budget_revenue,base.group_u
 access_budget_taz_user,Presupuesto TAZ,model_budget_taz,base.group_user,1,1,1,1
 access_budget_controller_user,Presupuesto Controller,model_budget_controller,base.group_user,1,1,1,1
 access_budget_base_user,Presupuesto Base,model_budget_base,base.group_user,1,1,1,1
-access_budget_hotel_user,budget.hotel user,model_budget_hotel,base.group_user,1,1,1,1
 access_budget_capex_group,budget.capex group,model_budget_capex,group_budget_capex,1,1,1,1

@@ -14,9 +14,13 @@ class BudgetBase(models.AbstractModel):
 
     responsible = fields.Char(required=True)
     description = fields.Text()
-    accounting_account = fields.Char("Accounting Account")
+    accounting_account = fields.Char()
     company = fields.Char()
-    hotel = fields.Many2one("budget.hotel", required=True)
+    hotel = fields.Many2one(
+        "pms.property",
+        required=False,  # Temporalmente opcional para migración
+        default=lambda self: self._get_default_hotel(),
+    )
     year = fields.Selection(
         get_years(),
         required=True,
@@ -36,7 +40,17 @@ class BudgetBase(models.AbstractModel):
     aug = fields.Float()
     sep = fields.Float()
 
-    total = fields.Float("TOTAL", compute="_compute_total", store=True)
+    total = fields.Float(compute="_compute_total", store=True)
+
+    def _get_default_hotel(self):
+        """Obtiene el hotel por defecto basado en la propiedad activa del usuario"""
+        if (
+            hasattr(self.env.user, "get_active_property_ids")
+            and self.env.user.get_active_property_ids()
+        ):
+            active_property_id = self.env.user.get_active_property_ids()[0]
+            return active_property_id
+        return False
 
     @api.depends(
         "oct",

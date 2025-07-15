@@ -1,26 +1,32 @@
 <odoo>
+  <!-- Vista Tree para mostrar propiedades PMS como hoteles -->
   <record id="view_budget_hotel_tree" model="ir.ui.view">
     <field name="name">budget.hotel.tree</field>
-    <field name="model">budget.hotel</field>
+    <field name="model">pms.property</field>
     <field name="arch" type="xml">
       <tree>
         <field name="name" />
-        <field name="code" />
+        <field name="pms_property_code" />
+        <field name="company_id" />
       </tree>
     </field>
   </record>
+
+  <!-- Vista Form para mostrar propiedades PMS -->
   <record id="view_budget_hotel_form" model="ir.ui.view">
     <field name="name">budget.hotel.form</field>
-    <field name="model">budget.hotel</field>
+    <field name="model">pms.property</field>
     <field name="arch" type="xml">
       <form>
         <group>
           <field name="name" />
-          <field name="code" />
+          <field name="pms_property_code" />
+          <field name="company_id" />
         </group>
       </form>
     </field>
   </record>
+
   <!-- Menú principal de Presupuesto -->
   <menuitem
         id="menu_budget_hotel"
@@ -28,11 +34,19 @@
         parent="menu_budget_root"
         sequence="0"
     />
+
+  <!-- Action para mostrar las propiedades PMS -->
   <record id="action_budget_hotel" model="ir.actions.act_window">
     <field name="name">Hotels</field>
-    <field name="res_model">budget.hotel</field>
+    <field name="res_model">pms.property</field>
     <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_smiling_face">
+        Hotels from PMS Properties.
+      </p>
+    </field>
   </record>
+
   <menuitem
         id="menu_budget_hotel_action"
         parent="menu_budget_hotel"
