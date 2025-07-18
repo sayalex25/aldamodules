@@ -1,3 +1,6 @@
+# Copyright 2025 Alexandra Suarez Graterol (Alda hotels) <saya.alex20@gmail.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import api, fields, models
 
 
@@ -15,12 +18,23 @@ class BudgetBase(models.AbstractModel):
     responsible = fields.Char(required=True)
     description = fields.Text()
     accounting_account = fields.Char()
-    company = fields.Char()
+    company = fields.Many2one(
+        "res.company",
+        required=False,
+        default=lambda self: self.env.company,
+    )
     hotel = fields.Many2one(
         "pms.property",
-        required=False,  # Temporalmente opcional para migración
+        required=True,
         default=lambda self: self._get_default_hotel(),
     )
+    hotel_code = fields.Char(
+        related="hotel.pms_property_code",
+        store=True,
+        string="Hotel Code",
+        readonly=True,
+    )
+    hotel_id = fields.Char(string="ID")
     year = fields.Selection(
         get_years(),
         required=True,
@@ -43,14 +57,22 @@ class BudgetBase(models.AbstractModel):
     total = fields.Float(compute="_compute_total", store=True)
 
     def _get_default_hotel(self):
-        """Obtiene el hotel por defecto basado en la propiedad activa del usuario"""
-        if (
-            hasattr(self.env.user, "get_active_property_ids")
-            and self.env.user.get_active_property_ids()
-        ):
-            active_property_id = self.env.user.get_active_property_ids()[0]
-            return active_property_id
+        try:
+            if (
+                hasattr(self.env.user, "get_active_property_ids")
+                and self.env.user.get_active_property_ids()
+            ):
+                active_property_id = self.env.user.get_active_property_ids()[0]
+                return active_property_id
+        except Exception:
+            pass
         return False
+
+    @api.constrains("hotel")
+    def _check_hotel(self):
+        for record in self:
+            if not record.hotel:
+                pass
 
     @api.depends(
         "oct",

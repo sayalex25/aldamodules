@@ -4,12 +4,13 @@
 from odoo import fields, models
 
 
-class BudgetMarketing(models.Model):
-    _name = "budget.marketing"
-    _description = "Marketing budget"
+class BudgetHotel(models.Model):
+    _name = "budget.hotel"
+    _description = "Budget Hotel Management"
     _inherit = "budget.base"
+
     department = fields.Selection(
-        [("marketing", "Marketing")],
-        default="marketing",
+        [("Hotels", "Hotels")],
+        default="Hotels",
         readonly=True,
     )

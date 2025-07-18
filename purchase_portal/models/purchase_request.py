@@ -269,19 +269,21 @@ class PurchaseRequestLine(models.Model):
 
         if lines:
             for hotel in lines.mapped("property_id"):
+                filtered_lines = lines.filtered(lambda r: r.property_id == hotel)
                 ctx = self.env.context.copy()
                 ctx["active_model"] = "purchase.request.line"
-                ctx["active_ids"] = lines.filtered(lambda r: r.property_id == hotel).ids
+                ctx["active_ids"] = filtered_lines.ids
                 supplier_id = (
-                    lines.mapped("suggested_supplier_id")[0].id
-                    if lines.mapped("suggested_supplier_id")
-                    else lines.mapped("supplier_id")[0].id
-                    if lines.mapped("supplier_id")
+                    filtered_lines.mapped("suggested_supplier_id")[0].id
+                    if filtered_lines.mapped("suggested_supplier_id")
+                    else filtered_lines.mapped("supplier_id")[0].id
+                    if filtered_lines.mapped("supplier_id")
                     else False
                 )
                 if not supplier_id:
                     _logger.error(
-                        _("No supplier found for purchase request lines %s") % lines.ids
+                        _("No supplier found for purchase request lines %s")
+                        % filtered_lines.ids
                     )
                     continue
                 wiz = (

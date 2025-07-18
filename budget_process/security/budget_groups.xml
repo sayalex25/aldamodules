@@ -35,4 +35,12 @@
     <field name="name">Budget TAZ</field>
     <field name="category_id" ref="base.module_category_accounting_and_finance" />
   </record>
+  <record id="budget_group_manager" model="res.groups">
+    <field name="name">Budget Manager</field>
+    <field name="category_id" ref="base.module_category_accounting_and_finance" />
+  </record>
+  <record id="budget_group_user" model="res.groups">
+    <field name="name">Budget User</field>
+    <field name="category_id" ref="base.module_category_accounting_and_finance" />
+  </record>
 </odoo>

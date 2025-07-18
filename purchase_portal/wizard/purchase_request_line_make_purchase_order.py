@@ -81,6 +81,9 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
         )
 
         if len(line_ids.mapped("suggested_supplier_id")) < 2:
+            self.item_ids = self.item_ids.filtered(
+                lambda x: x.line_id.suggested_supplier_id
+            )
             return super(
                 PurchaseRequestLineMakePurchaseOrder, self
             ).make_purchase_order()
