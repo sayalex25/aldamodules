@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+        Formulario de envío de ticket del website helpdesk.
+        Origen: exportado desde staging (website_helpdesk.team_form_10).
+        NOTA: el campo team_id oculto tiene value="10" (ID del equipo en producción).
+        En local puede ser necesario ajustar ese value al ID del equipo correspondiente.
+    -->
+    <record id="team_form_10" model="ir.ui.view">
+        <field name="name">website_helpdesk.team_form_10</field>
+        <field name="key">website_helpdesk.team_form_10</field>
+        <field name="type">qweb</field>
+        <field name="arch" type="xml">
+            <t
+                name="Helpdesk: Submit a Ticket Form"
+                t-name="website_helpdesk.ticket_submit_form"
+            >
+                <t t-set="additional_title">Enviar un ticket</t>
+                <div class="container">
+                    <h2 class="text-muted">
+                        Enviar un ticket
+                        <t t-if="multiple_teams">- <t t-out="team.name" /></t>
+                    </h2>
+                    <div class="oe_structure" id="oe_structure_whelpdesk_form_1" />
+                    <span
+                        class="hidden"
+                        data-for="helpdesk_ticket_form"
+                        t-att-data-values="{'team_id': team and team.id or ''}"
+                    />
+                    <div id="helpdesk_section" class="">
+                        <section
+                            class="s_website_form pt16 pb16 o_colored_level"
+                            data-vcss="001"
+                            data-snippet="s_website_form"
+                            data-name="Form"
+                            style="background-image: none;"
+                        >
+                            <div class="container">
+                                <form
+                                    id="helpdesk_ticket_form"
+                                    action="/website/form/"
+                                    method="post"
+                                    enctype="multipart/form-data"
+                                    class="o_mark_required"
+                                    data-mark="*"
+                                    data-pre-fill="true"
+                                    data-success-mode="redirect"
+                                    data-success-page="/your-ticket-has-been-submitted"
+                                    data-model_name="helpdesk.ticket"
+                                >
+                                    <div
+                                        class="s_website_form_rows row s_col_no_bgcolor"
+                                    >
+
+                                        <!-- Asunto (obligatorio) -->
+                                        <div
+                                            data-visibility-condition=""
+                                            data-visibility-between=""
+                                            class="s_website_form_field mb-3 col-12 s_website_form_model_required"
+                                            data-type="char"
+                                            data-name="Field"
+                                            data-translated-name="Campo"
+                                        >
+                                            <div
+                                                class="row s_col_no_resize s_col_no_bgcolor"
+                                            >
+                                                <label
+                                                    class="col-form-label col-sm-auto s_website_form_label"
+                                                    style="width: 200px"
+                                                    for="oxau3dubuz2e"
+                                                >
+                                                    <span
+                                                        class="s_website_form_label_content"
+                                                    >Asunto</span>
+                                                    <span
+                                                        class="s_website_form_mark"
+                                                    > *</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control s_website_form_input"
+                                                        name="name"
+                                                        required="true"
+                                                        value=""
+                                                        placeholder=""
+                                                        id="oxau3dubuz2e"
+                                                        data-fill-with="undefined"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Correo electrónico del cliente (oculto, se rellena automáticamente) -->
+                                        <div
+                                            data-visibility-condition=""
+                                            data-visibility-between=""
+                                            class="s_website_form_field mb-3 col-12 s_website_form_field_hidden"
+                                            data-type="char"
+                                            data-name="Field"
+                                            data-translated-name="Campo"
+                                        >
+                                            <div
+                                                class="row s_col_no_resize s_col_no_bgcolor"
+                                            >
+                                                <label
+                                                    class="col-form-label col-sm-auto s_website_form_label"
+                                                    style="width: 200px"
+                                                    for="ollswby2hov"
+                                                >
+                                                    <span
+                                                        class="s_website_form_label_content"
+                                                    >Correo electrónico del cliente</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control s_website_form_input"
+                                                        name="partner_email"
+                                                        value=""
+                                                        placeholder=""
+                                                        id="ollswby2hov"
+                                                        data-fill-with="undefined"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Descripción -->
+                                        <div
+                                            class="mb-0 py-2 s_website_form_field col-12"
+                                            data-type="char"
+                                            data-name="Field"
+                                        >
+                                            <div
+                                                class="row s_col_no_resize s_col_no_bgcolor"
+                                            >
+                                                <label
+                                                    class="col-form-label col-sm-auto s_website_form_label"
+                                                    style="width: 200px"
+                                                    for="helpdesk4"
+                                                >
+                                                    <span
+                                                        class="s_website_form_label_content"
+                                                    >Descripción</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <textarea
+                                                        type="text"
+                                                        class="form-control s_website_form_input"
+                                                        name="description"
+                                                        id="helpdesk4"
+                                                        rows="5"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Archivo adjunto -->
+                                        <div
+                                            class="mb-0 py-2 s_website_form_field col-12 s_website_form_custom"
+                                            data-type="binary"
+                                            data-name="Field"
+                                            data-visibility-condition=""
+                                            data-visibility-between=""
+                                        >
+                                            <div
+                                                class="row s_col_no_resize s_col_no_bgcolor"
+                                            >
+                                                <label
+                                                    class="col-sm-auto s_website_form_label"
+                                                    style="width: 200px"
+                                                    for="helpdesk5"
+                                                >
+                                                    <span
+                                                        class="s_website_form_label_content"
+                                                    >Archivo adjunto</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input
+                                                        type="file"
+                                                        class="form-control s_website_form_input"
+                                                        name="Attachment"
+                                                        id="helpdesk5"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- team_id oculto — ajustar value al ID del equipo en local -->
+                                        <div
+                                            class="s_website_form_field mb-3 col-12 s_website_form_dnone"
+                                            data-name="Field"
+                                        >
+                                            <div
+                                                class="row s_col_no_resize s_col_no_bgcolor"
+                                            >
+                                                <label
+                                                    class="col-form-label col-sm-auto s_website_form_label"
+                                                    style="width: 200px"
+                                                >
+                                                    <span
+                                                        class="s_website_form_label_content"
+                                                    />
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input
+                                                        type="hidden"
+                                                        class="form-control s_website_form_input"
+                                                        name="team_id"
+                                                        value="10"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Nombre del cliente -->
+                                        <div
+                                            data-visibility-condition=""
+                                            data-visibility-between=""
+                                            class="s_website_form_field mb-3 col-12"
+                                            data-type="char"
+                                            data-name="Field"
+                                            data-translated-name="Campo"
+                                        >
+                                            <div
+                                                class="row s_col_no_resize s_col_no_bgcolor"
+                                            >
+                                                <label
+                                                    class="col-form-label col-sm-auto s_website_form_label"
+                                                    style="width: 200px"
+                                                    for="ob1vcth3t0ab"
+                                                >
+                                                    <span
+                                                        class="s_website_form_label_content"
+                                                    >Nombre del cliente</span>
+                                                </label>
+                                                <div class="col-sm">
+                                                    <input
+                                                        type="text"
+                                                        class="form-control s_website_form_input"
+                                                        name="partner_name"
+                                                        value=""
+                                                        placeholder=""
+                                                        id="ob1vcth3t0ab"
+                                                        data-fill-with="undefined"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Botón enviar -->
+                                        <div
+                                            class="mb-0 py-2 col-12 s_website_form_submit"
+                                            data-name="Submit Button"
+                                        >
+                                            <div
+                                                style="width: 200px;"
+                                                class="s_website_form_label"
+                                            />
+                                            <a
+                                                href="#"
+                                                role="button"
+                                                class="btn btn-primary btn-lg s_website_form_send o_default_snippet_text"
+                                            >Enviar</a>
+                                            <span id="s_website_form_result" />
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </t>
+        </field>
+    </record>
+</odoo>

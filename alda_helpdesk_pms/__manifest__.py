@@ -46,6 +46,7 @@
         "views/helpdesk_portal_templates.xml",
         "views/helpdesk_pms_purchase_templates.xml",
         "views/helpdesk_team_views.xml",
+        "views/website_helpdesk_team_form.xml",
         "data/ir_cron.xml",
     ],
     "assets": {
