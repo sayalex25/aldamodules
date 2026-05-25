@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- ============================================================
+         Vista Calendario: tickets como eventos planificados
+    ============================================================ -->
+    <record id="helpdesk_ticket_view_calendar" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.calendar.planning</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <calendar
+                string="Calendario de incidencias"
+                date_start="date_planned_start"
+                date_stop="date_planned_end"
+                color="team_id"
+                mode="month"
+                quick_add="False"
+            >
+                <field name="name" />
+                <field name="user_id" avatar_field="image_128" />
+                <field name="priority" />
+                <field name="team_id" filters="1" />
+                <field name="stage_id" filters="1" />
+                <field name="tag_ids" />
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ============================================================
+         Vista Gantt: cronograma de incidencias por usuario
+    ============================================================ -->
+    <record id="helpdesk_ticket_view_gantt" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.gantt.planning</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <gantt
+                string="Cronograma de incidencias"
+                date_start="date_planned_start"
+                date_stop="date_planned_end"
+                default_group_by="user_id"
+                color="team_id"
+                default_scale="week"
+            >
+                <field name="name" />
+                <field name="priority" />
+                <field name="team_id" />
+                <field name="stage_id" />
+            </gantt>
+        </field>
+    </record>
+
+    <!-- ============================================================
+         Añadir campos de planificación al formulario del ticket
+    ============================================================ -->
+    <record id="helpdesk_ticket_view_form_inherit_planning" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.inherit.planning</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form" />
+        <field name="arch" type="xml">
+            <!-- Añadir fechas de planificación después del campo tag_ids -->
+            <field name="tag_ids" position="after">
+                <field
+                    name="date_planned_start"
+                    widget="daterange"
+                    options="{'related_end_date': 'date_planned_end'}"
+                />
+                <field
+                    name="date_planned_end"
+                    widget="daterange"
+                    options="{'related_start_date': 'date_planned_start'}"
+                />
+            </field>
+        </field>
+    </record>
+
+    <!-- ============================================================
+         Añadir vistas calendario y gantt al action principal
+    ============================================================ -->
+    <record id="helpdesk_ticket_action_calendar" model="ir.actions.act_window.view">
+        <field name="sequence">50</field>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="helpdesk_ticket_view_calendar" />
+        <field name="act_window_id" ref="helpdesk.helpdesk_ticket_action_main_tree" />
+    </record>
+
+    <record id="helpdesk_ticket_action_gantt" model="ir.actions.act_window.view">
+        <field name="sequence">60</field>
+        <field name="view_mode">gantt</field>
+        <field name="view_id" ref="helpdesk_ticket_view_gantt" />
+        <field name="act_window_id" ref="helpdesk.helpdesk_ticket_action_main_tree" />
+    </record>
+
+    <!-- Actualizar el action para incluir los nuevos view_mode -->
+    <record
+        id="helpdesk.helpdesk_ticket_action_main_tree"
+        model="ir.actions.act_window"
+    >
+        <field
+            name="view_mode"
+        >tree,kanban,form,activity,pivot,graph,cohort,calendar,gantt</field>
+    </record>
+
+</odoo>
