@@ -51,22 +51,33 @@ odoo.define("alda_helpdesk_pms.ticket_form", function () {
         const incidentLink = document.getElementById("incident_link");
         const purchaseLink = document.getElementById("purchase_link");
 
-        if (select && incidentLink && purchaseLink) {
-            select.addEventListener("change", function () {
-                const propertyId = this.value;
+        if (select) {
+            const updateTicketLinks = function () {
+                const propertyId = select.value;
 
-                if (propertyId) {
-                    incidentLink.href = `/helpdesk/ticket/new?property_id=${propertyId}`;
-                    purchaseLink.href = `/helpdesk/ticket/new/purchase?property_id=${propertyId}`;
-                    incidentLink.classList.remove("disabled");
-                    purchaseLink.classList.remove("disabled");
-                } else {
-                    incidentLink.href = "#";
-                    purchaseLink.href = "#";
-                    incidentLink.classList.add("disabled");
-                    purchaseLink.classList.add("disabled");
+                if (incidentLink) {
+                    if (propertyId) {
+                        incidentLink.href = `/helpdesk/ticket/new?property_id=${propertyId}`;
+                        incidentLink.classList.remove("disabled");
+                    } else {
+                        incidentLink.href = "#";
+                        incidentLink.classList.add("disabled");
+                    }
                 }
-            });
+
+                if (purchaseLink) {
+                    if (propertyId) {
+                        purchaseLink.href = `/helpdesk/ticket/new/purchase?property_id=${propertyId}`;
+                        purchaseLink.classList.remove("disabled");
+                    } else {
+                        purchaseLink.href = "#";
+                        purchaseLink.classList.add("disabled");
+                    }
+                }
+            };
+
+            select.addEventListener("change", updateTicketLinks);
+            updateTicketLinks();
         }
 
         const locationSelect = document.querySelector("[name='location_type']");
